@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const UserSchema = new Schema({
     username: {
@@ -13,6 +14,11 @@ const UserSchema = new Schema({
         unique: true,
         validate: [/.+@.+\..+/, 'Please enter a valid e-mail address']
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (createdAtVal) => dateFormat(createdAtVal)
+    },
     thoughts: [
         {
             type: Schema.Types.ObjectId,
@@ -24,7 +30,8 @@ const UserSchema = new Schema({
   },
   {
       toJSON: {
-          virtuals: true
+          virtuals: true,
+          getters: true
       },
       id: false
   }
