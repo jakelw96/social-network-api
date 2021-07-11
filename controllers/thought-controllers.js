@@ -13,7 +13,7 @@ const ThoughtController = {
     
     // get a single thought by id
     getThoughtById({ params }, res) {
-        Thought.findOne({ _id: params.id })
+        Thought.findOne({ _id: params.thoughtId })
             .populate({
                 path: 'reactions',
                 select: ('-__v')
@@ -34,7 +34,7 @@ const ThoughtController = {
     
     // Create a thought
     createThought({ params, body }, res) {
-        Thought.create({body})
+        Thought.create(body)
             .then(({ _id }) => {
                 return User.findOneAndUpdate(
                     { _id: params.userId },
@@ -93,7 +93,7 @@ const ThoughtController = {
     
     // Update a thought by id
     updateThought({ params, body }, res) {
-        Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id' });
@@ -109,7 +109,7 @@ const ThoughtController = {
     
     // Delete a thought
     deleteThought({ params }, res) {
-        Thought.findOneAndDelete({ _id: params.id })
+        Thought.findOneAndDelete({ _id: params.thoughtId })
             .then(dbThoughtData => {
                 if (!dbThoughtData) {
                     res.status(404).json({ message: 'No thought found with this id' });
@@ -122,7 +122,6 @@ const ThoughtController = {
                 res.status(404).json(err);
             });
     }
-
-
-
 }
+
+module.exports = ThoughtController;

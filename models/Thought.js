@@ -10,7 +10,7 @@ const ReactionSchema = new Schema(
         reactionBody: {
             type: String,
             required: true,
-            validate:[/^[a-zA-Z]{,280}$/, 'Reaction cannot exceed 280 characters.']
+            validate:[/[a-zA-Z]{0,280}/, 'Reaction cannot exceed 280 characters.']
         },
         username: {
             type: String,
@@ -31,10 +31,10 @@ const ReactionSchema = new Schema(
 
 const ThoughtSchema = new Schema(
     {
-        thoughtText = {
+        thoughtText: {
             type: String,
             required: true,
-            validate:[/^[a-zA-Z]{1,280}$/, 'Please enter between 1 and 280 characters.'] 
+            validate: [/[a-zA-Z]{1,280}/, 'Please enter between 1 and 280 characters.'] 
         },
         createdAt: {
             type: Date,
